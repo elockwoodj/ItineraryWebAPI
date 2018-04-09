@@ -76,7 +76,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="image" Type="String" />
           <Property Name="priceBuy" Type="Double" />
           <Property Name="category" Type="Int32" Nullable="false" />
           <Property Name="accountId" Type="Int32" Nullable="false" />
