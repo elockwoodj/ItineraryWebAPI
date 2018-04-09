@@ -11,8 +11,9 @@ namespace ItineraryWebAPI
         public AuctionBEANS() { }
 
         public int Id { get; set; }
+        public string title { get; set; }
         public string description { get; set; }
-        public byte[] image { get; set; }
+        public string image { get; set; }
         public Nullable<double> priceBuy { get; set; }
         public string category { get; set; }
         public Nullable<int> categoryId { get; set; }

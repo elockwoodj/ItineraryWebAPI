@@ -26,6 +26,7 @@ namespace ItineraryWebAPI
                                                      select new AuctionBEANS
                                                      {
                                                          Id = list.Id,
+                                                         title = list.title,
                                                          description = list.description,
                                                          image = list.image,
                                                          category = categ.category,
@@ -68,12 +69,53 @@ namespace ItineraryWebAPI
             try
             {
                 Listings _newListing = new Listings();
+                _newListing.title = _listingBEAN.title;
                 _newListing.description = _listingBEAN.description;
-                _newListing.image = _listingBEAN.image;
                 _newListing.priceBuy = _listingBEAN.priceBuy;
                 _newListing.category = _listingBEAN.categoryId;
                 _newListing.accountId = _listingBEAN.accountId;
                 _newListing.startDate = _listingBEAN.startDate;
+
+                switch (_listingBEAN.categoryId)
+                {
+                    case 1:
+                        _newListing.image = "Content/Toys and Games.jpg";
+                    break;
+                    case 2:
+                        _newListing.image = "Content/furniture.jpg";
+                    break;
+                    case 3:
+                        _newListing.image = "Content/appliances.jpg";
+                    break;
+                    case 4:
+                        _newListing.image = "Content/electronics.jpg";
+                    break;
+                    case 5:
+                        _newListing.image = "Content/mClothes.jpg";
+                    break;
+                    case 6:
+                        _newListing.image = "Content/wClothes.jpg";
+                    break;
+                    case 7:
+                        _newListing.image = "Content/kClothes.jpg";
+                    break;
+                    case 8:
+                        _newListing.image = "Content/gaming.jpg";
+                    break;
+                    case 9:
+                        _newListing.image = "Content/kids.jpg";
+                    break;
+                    case 10:
+                        _newListing.image = "Content/garden.jpg";
+                    break;
+                    case 11:
+                        _newListing.image = "Content/tools.jpg";
+                    break;
+                    case 12:
+                        _newListing.image = "Content/books-movies-music.jpg";
+                    break;
+                }
+
                 _context.Listings.Add(_newListing);
                 _context.SaveChanges();
                 return true;
@@ -110,6 +152,7 @@ namespace ItineraryWebAPI
             else
             {
                 Listings _doomedList = new Listings();
+                _doomedList.title = _listingBEAN.title;
                 _doomedList.description = _listingBEAN.description;
                 _doomedList.image = _listingBEAN.image;
                 _doomedList.priceBuy = _listingBEAN.priceBuy;
@@ -129,10 +172,51 @@ namespace ItineraryWebAPI
             if (ListingCheck(_listingBEAN.Id) == true)
             {
                 Listings update = GetSingularListing(_listingBEAN.Id);
+                update.title = _listingBEAN.title;
                 update.category = _listingBEAN.categoryId;
                 update.description = _listingBEAN.description;
-                update.image = _listingBEAN.image;
                 update.priceBuy = _listingBEAN.priceBuy;
+
+                switch (_listingBEAN.categoryId)
+                {
+                    case 1:
+                        update.image = "Content/Toys and Games.jpg";
+                        break;
+                    case 2:
+                        update.image = "Content/furniture.jpg";
+                        break;
+                    case 3:
+                        update.image = "Content/appliances.jpg";
+                        break;
+                    case 4:
+                        update.image = "Content/electronics.jpg";
+                        break;
+                    case 5:
+                        update.image = "Content/mClothes.jpg";
+                        break;
+                    case 6:
+                        update.image = "Content/wClothes.jpg";
+                        break;
+                    case 7:
+                        update.image = "Content/kClothes.jpg";
+                        break;
+                    case 8:
+                        update.image = "Content/gaming.jpg";
+                        break;
+                    case 9:
+                        update.image = "Content/kids.jpg";
+                        break;
+                    case 10:
+                        update.image = "Content/garden.jpg";
+                        break;
+                    case 11:
+                        update.image = "Content/tools.jpg";
+                        break;
+                    case 12:
+                        update.image = "Content/books-movies-music.jpg";
+                        break;
+                }
+
                 _context.SaveChanges();
                 return true;
             }
