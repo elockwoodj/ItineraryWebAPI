@@ -16,7 +16,7 @@ namespace ItineraryWebAPI
     {
         public int Id { get; set; }
         public string description { get; set; }
-        public byte[] image { get; set; }
+        public string image { get; set; }
         public Nullable<double> priceBuy { get; set; }
         public int category { get; set; }
         public int accountId { get; set; }
