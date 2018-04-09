@@ -35,6 +35,29 @@ namespace ItineraryWebAPI
             }
         }
 
+
+       
+
+        public HttpResponseMessage GetListingHistory(int accountId)
+        {
+            IEnumerable<Listings> _listHistory =
+                _listingService.GetListingHistory(accountId);
+            if (_listHistory == null)
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.NotFound);
+                return response;
+            }
+            else
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.OK, _listHistory);
+                return response;
+            }
+        }
+
+       
+
         [HttpPost]
         public HttpResponseMessage postListing(AuctionBEANS newListing)
         {
@@ -74,15 +97,32 @@ namespace ItineraryWebAPI
         }
 
         [HttpDelete]
-        public HttpResponseMessage deleteListing()
+
+        public HttpResponseMessage deleteListing (int id)
         {
-
-
-
-
+            Listings _doomedListing = _listingService.GetSingularListing(id);
+            if(_doomedListing == null)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.NotFound, id);
+                return response;
+            }
+            else
+            {
+                 if (_listingService.DeleteListing(_doomedListing))
+                {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.OK, _doomedListing);
+                    return response;
+                }
+                 else
+                {
+                    HttpResponseMessage response =
+                        Request.CreateResponse(HttpStatusCode.InternalServerError, id);
+                    return response;
+                }
+            }
+           
         }
-
-
 
         //// GET: api/Listing
         //public IEnumerable<string> Get()
@@ -97,18 +137,18 @@ namespace ItineraryWebAPI
         //}
 
         // POST: api/Listing
-        public void Post([FromBody]string value)
-        {
-        }
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
-        // PUT: api/Listing/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT: api/Listing/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
-        // DELETE: api/Listing/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Listing/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
