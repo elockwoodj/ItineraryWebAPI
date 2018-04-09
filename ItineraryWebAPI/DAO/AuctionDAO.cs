@@ -142,7 +142,7 @@ namespace ItineraryWebAPI
         }
 
         //Delete Listing Functionality
-        public bool DeleteListing(AuctionBEANS _listingBEAN)
+        public bool DeleteListing(Listings _listingBEAN)
         {
             bool check = ListingCheck(_listingBEAN.Id);
             if (check == false)
@@ -156,7 +156,7 @@ namespace ItineraryWebAPI
                 _doomedList.description = _listingBEAN.description;
                 _doomedList.image = _listingBEAN.image;
                 _doomedList.priceBuy = _listingBEAN.priceBuy;
-                _doomedList.category = _listingBEAN.categoryId;
+                _doomedList.category = _listingBEAN.category;
                 _doomedList.accountId = _listingBEAN.accountId;
                 _doomedList.startDate = _listingBEAN.startDate;
                 _context.Listings.Remove(_doomedList);
