@@ -17,6 +17,8 @@ namespace ItineraryWebAPI.Controllers
             _listingService = new AuctionDAO();
         }
 
+
+        [HttpGet]
         public HttpResponseMessage GetListingHistory(int accountId)
         {
             IEnumerable<Listings> _listHistory =

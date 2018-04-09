@@ -35,29 +35,6 @@ namespace ItineraryWebAPI
             }
         }
 
-
-       
-
-        public HttpResponseMessage GetListingHistory(int accountId)
-        {
-            IEnumerable<Listings> _listHistory =
-                _listingService.GetListingHistory(accountId);
-            if (_listHistory == null)
-            {
-                HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.NotFound);
-                return response;
-            }
-            else
-            {
-                HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.OK, _listHistory);
-                return response;
-            }
-        }
-
-       
-
         [HttpPost]
         public HttpResponseMessage postListing(AuctionBEANS newListing)
         {
@@ -95,6 +72,16 @@ namespace ItineraryWebAPI
                 return response;
             }
         }
+
+        [HttpDelete]
+        public HttpResponseMessage deleteListing()
+        {
+
+
+
+
+        }
+
 
 
         //// GET: api/Listing
