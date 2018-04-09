@@ -15,12 +15,12 @@ namespace ItineraryWebAPI
     public partial class Listings
     {
         public int Id { get; set; }
-        public string title { get; set; }
         public string description { get; set; }
-        public string image { get; set; }
+        public byte[] image { get; set; }
         public Nullable<double> priceBuy { get; set; }
-        public Nullable<int> category { get; set; }
-        public Nullable<int> accountId { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
+        public int category { get; set; }
+        public int accountId { get; set; }
+        public System.DateTime startDate { get; set; }
+        public string title { get; set; }
     }
 }
