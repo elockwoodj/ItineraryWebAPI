@@ -16,7 +16,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="bid" Type="float" Nullable="false" />
           <Property Name="itemId" Type="int" Nullable="false" />
           <Property Name="accountId" Type="int" Nullable="false" />
@@ -33,6 +33,7 @@
           <Property Name="startDate" Type="datetime" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="image" Type="varchar" MaxLength="50" />
+          <Property Name="startPrice" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -76,12 +77,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" />
+          <Property Name="image" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="priceBuy" Type="Double" />
           <Property Name="category" Type="Int32" Nullable="false" />
           <Property Name="accountId" Type="Int32" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="startPrice" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -126,6 +128,7 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="yAuction.Listings">
               <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="startPrice" ColumnName="startPrice" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="description" ColumnName="description" />
