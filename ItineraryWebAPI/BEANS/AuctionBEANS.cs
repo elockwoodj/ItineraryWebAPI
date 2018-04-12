@@ -16,8 +16,9 @@ namespace ItineraryWebAPI
         public string image { get; set; }
         public Nullable<double> priceBuy { get; set; }
         public string category { get; set; }
-        public Nullable<int> categoryId { get; set; }
-        public Nullable<int> accountId { get; set; }
-        public Nullable<DateTime> startDate { get; set; }
+        public int categoryId { get; set; }
+        public int accountId { get; set; }
+        public DateTime startDate { get; set; }
+        public double startPrice { get; set; }
     }
 }
