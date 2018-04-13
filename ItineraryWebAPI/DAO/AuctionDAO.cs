@@ -33,7 +33,8 @@ namespace ItineraryWebAPI
                                                          priceBuy = list.priceBuy,
                                                          startDate = list.startDate,
                                                          accountId = list.accountId,
-                                                         categoryId = list.category
+                                                         categoryId = list.category,
+                                                         startPrice = list.startPrice
 
                                                      };
 
@@ -75,6 +76,7 @@ namespace ItineraryWebAPI
                 _newListing.category = _listingBEAN.categoryId;
                 _newListing.accountId = _listingBEAN.accountId;
                 _newListing.startDate = _listingBEAN.startDate;
+                _newListing.startPrice = _listingBEAN.startPrice;
 
                 switch (_listingBEAN.categoryId)
                 {
@@ -159,6 +161,7 @@ namespace ItineraryWebAPI
                 _doomedList.category = _listingBEAN.category;
                 _doomedList.accountId = _listingBEAN.accountId;
                 _doomedList.startDate = _listingBEAN.startDate;
+                _doomedList.startPrice = _listingBEAN.startPrice;
                 _context.Listings.Remove(_doomedList);
                 _context.SaveChanges();
                 return true;
@@ -176,6 +179,7 @@ namespace ItineraryWebAPI
                 update.category = _listingBEAN.categoryId;
                 update.description = _listingBEAN.description;
                 update.priceBuy = _listingBEAN.priceBuy;
+                update.startPrice = _listingBEAN.startPrice;
 
                 switch (_listingBEAN.categoryId)
                 {

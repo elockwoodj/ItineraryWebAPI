@@ -22,5 +22,6 @@ namespace ItineraryWebAPI
         public int accountId { get; set; }
         public System.DateTime startDate { get; set; }
         public string title { get; set; }
+        public double startPrice { get; set; }
     }
 }

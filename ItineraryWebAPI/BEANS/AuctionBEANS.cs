@@ -19,5 +19,6 @@ namespace ItineraryWebAPI
         public int categoryId { get; set; }
         public int accountId { get; set; }
         public DateTime startDate { get; set; }
+        public double startPrice { get; set; }
     }
 }
