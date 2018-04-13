@@ -58,6 +58,7 @@ namespace ItineraryWebAPI.Controllers
             {
                 myAuth.authenticated = false;
                 myAuth.name = "";
+                myAuth.accountId = 0;
                 HttpResponseMessage response =
                     Request.CreateResponse(HttpStatusCode.OK, myAuth);
                 return response;
