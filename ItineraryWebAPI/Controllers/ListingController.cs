@@ -17,45 +17,23 @@ namespace ItineraryWebAPI
         }
 
         [HttpGet]
-        public HttpResponseMessage GetListings(int id)
-        {
-            IEnumerable<AuctionBEANS> listing =  _listingService.GetListings(id);
 
+        public HttpResponseMessage getSingularListing (int id)
+        {
+            Listings listing = _listingService.GetSingularListing(id);
             if (listing == null)
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.NotFound);
+                 Request.CreateResponse(HttpStatusCode.NotFound);
                 return response;
             }
             else
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.OK, listing);
+                Request.CreateResponse(HttpStatusCode.OK, listing);
                 return response;
             }
         }
-
-
-       
-
-        public HttpResponseMessage GetListingHistory(int accountId)
-        {
-            IEnumerable<Listings> _listHistory =
-                _listingService.GetListingHistory(accountId);
-            if (_listHistory == null)
-            {
-                HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.NotFound);
-                return response;
-            }
-            else
-            {
-                HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.OK, _listHistory);
-                return response;
-            }
-        }
-
        
 
         [HttpPost]

@@ -39,6 +39,25 @@ namespace ItineraryWebAPI.Controllers
         }
 
 
+        public HttpResponseMessage GetListings(int id)
+        {
+            IEnumerable<AuctionBEANS> listing = _listingService.GetListings(id);
+
+            if (listing == null)
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.NotFound);
+                return response;
+            }
+            else
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.OK, listing);
+                return response;
+            }
+        }
+
+
         //        // GET: Category
         //        public ActionResult Index()
         //        {
