@@ -207,6 +207,7 @@
       <DependentUpon>NCPCDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\BidHistoryController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -467,6 +468,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\BidHistory\" />
+    <Folder Include="Views\Bid\" />
     <Folder Include="Views\Category\" />
     <Folder Include="Views\ListingHistory\" />
   </ItemGroup>
