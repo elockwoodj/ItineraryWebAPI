@@ -180,6 +180,7 @@ namespace ItineraryWebAPI
                 update.description = _listingBEAN.description;
                 update.priceBuy = _listingBEAN.priceBuy;
                 update.startPrice = _listingBEAN.startPrice;
+                update.startDate = _listingBEAN.startDate;
 
                 switch (_listingBEAN.categoryId)
                 {
