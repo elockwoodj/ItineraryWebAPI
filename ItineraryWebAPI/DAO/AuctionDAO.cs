@@ -268,15 +268,84 @@ namespace ItineraryWebAPI
 
         }
 
+        public double GetAuctionPrice(int ItemId)
+        {
+            IQueryable<listingBid> _priceCheck;
+            _priceCheck = from listingBid
+                          in _context.listingBid
+                          where listingBid.itemId == ItemId
+                          orderby listingBid.bid
+                          select listingBid;
+
+            listingBid bidPrice = _priceCheck.ToList<listingBid>().First();
+            if (bidPrice == null)
+            {
+                IQueryable<Listings> _checker;
+                _checker = from Listings
+                           in _context.Listings
+                           where Listings.Id == ItemId
+                           select Listings;
+                Listings checker = _checker.ToList<Listings>().First();
+
+                return checker.startPrice;
+            }
+            else
+            {
+                return bidPrice.bid;
+            }
+
+        }
         public bool MakeBid(bidBEANS _newBid)
         {
             try
             {
-                listingBid newHighBid = new listingBid();
-                newHighBid.bid = _newBid.bid;
-                newHighBid.itemId = _newBid.itemId;
-                newHighBid.accountId = _newBid.accountId;
-                return true;
+                IQueryable<listingBid> _IDCheck;
+                _IDCheck = from listingBid
+                           in _context.listingBid
+                           where listingBid.itemId == _newBid.itemId
+                           orderby listingBid.bid
+                           select listingBid;
+                listingBid myBid = _IDCheck.ToList<listingBid>().First();
+
+                if (myBid == null)
+                {
+                    IQueryable<Listings> _startCheck;
+                    _startCheck = from listing
+                                  in _context.Listings
+                                  where listing.Id == _newBid.itemId
+                                  select listing;
+                    Listings myListing = _startCheck.ToList<Listings>().First();
+                    
+
+                    if (_newBid.bid > myListing.startPrice)
+                    {
+                        listingBid newHighBid = new listingBid();
+                        newHighBid.bid = _newBid.bid;
+                        newHighBid.itemId = _newBid.itemId;
+                        newHighBid.accountId = _newBid.accountId;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    if (_newBid.bid > myBid.bid)
+                    {
+                        listingBid newHighBid = new listingBid();
+                        newHighBid.bid = _newBid.bid;
+                        newHighBid.itemId = _newBid.itemId;
+                        newHighBid.accountId = _newBid.accountId;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
             catch (DbEntityValidationException e)
             {

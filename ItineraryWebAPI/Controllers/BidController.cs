@@ -19,6 +19,15 @@ namespace ItineraryWebAPI.Controllers
             _listingService = new AuctionDAO();
         }
 
+        [HttpGet]
+        public HttpResponseMessage auctionPrice(int itemId)
+        {
+            double auctionPrice = _listingService.GetAuctionPrice(itemId);
+            HttpResponseMessage response =
+                Request.CreateResponse(HttpStatusCode.OK, auctionPrice);
+            return response;
+        }
+
         [HttpPost]
         public HttpResponseMessage postListing(bidBEANS newBi_d)
         {
