@@ -20,20 +20,20 @@ namespace ItineraryWebAPI.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage postListing(bidBEANS newBid)
+        public HttpResponseMessage postListing(bidBEANS newBi_d)
         {
-            if (_listingService.MakeBid(newBid) == true)
+            if (_listingService.MakeBid(newBi_d) == true)
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.Created, newBid);
+                    Request.CreateResponse(HttpStatusCode.Created, newBi_d);
                 response.Headers.Location =
-                    new Uri(Request.RequestUri, "/api/Bid/" + newBid.Id.ToString());
+                    new Uri(Request.RequestUri, "/api/Bid/" + newBi_d.Id.ToString());
                 return response;
             }
             else
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.NotAcceptable, newBid);
+                    Request.CreateResponse(HttpStatusCode.NotAcceptable, newBi_d);
                 return response;
             }
         }
