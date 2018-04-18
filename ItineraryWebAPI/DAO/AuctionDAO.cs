@@ -274,7 +274,7 @@ namespace ItineraryWebAPI
             _priceCheck = from listingBid
                           in _context.listingBid
                           where listingBid.itemId == ItemId
-                          orderby listingBid.bid
+                          orderby listingBid.bid descending
                           select listingBid;
 
             listingBid bidPrice = _priceCheck.ToList<listingBid>().First();
@@ -303,7 +303,7 @@ namespace ItineraryWebAPI
                 _IDCheck = from listingBid
                            in _context.listingBid
                            where listingBid.itemId == _newBid.itemId
-                           orderby listingBid.bid
+                           orderby listingBid.bid descending
                            select listingBid;
                 listingBid myBid = _IDCheck.ToList<listingBid>().First();
 
