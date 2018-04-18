@@ -270,16 +270,21 @@ namespace ItineraryWebAPI
 
         public double GetAuctionPrice(int ItemId)
         {
-            IQueryable<listingBid> _priceCheck;
-            _priceCheck = from listingBid
+            //Two if statements, one as per in MakeBid one as per below - below comes first to check if null, then do makebid version.
+            double price=0;
+            listingBid _priceCheck;
+            _priceCheck = (from listingBid
                           in _context.listingBid
                           where listingBid.itemId == ItemId
                           orderby listingBid.bid descending
-                          select listingBid;
-
-            listingBid bidPrice = _priceCheck.ToList<listingBid>().First();
-            if (bidPrice == null)
+                          select listingBid).DefaultIfEmpty(null).First();
+            if (_priceCheck != null) { 
+                //listingBid bidPrice = _priceCheck.ToList<listingBid>().DefaultIfEmpty(null).First();
+                price = _priceCheck.bid;
+            }
+            else
             {
+                
                 IQueryable<Listings> _checker;
                 _checker = from Listings
                            in _context.Listings
@@ -287,12 +292,9 @@ namespace ItineraryWebAPI
                            select Listings;
                 Listings checker = _checker.ToList<Listings>().First();
 
-                return checker.startPrice;
+                price = checker.startPrice;
             }
-            else
-            {
-                return bidPrice.bid;
-            }
+            return price;
 
         }
         public bool MakeBid(bidBEANS _newBid)
@@ -323,6 +325,8 @@ namespace ItineraryWebAPI
                         newHighBid.bid = _newBid.bid;
                         newHighBid.itemId = _newBid.itemId;
                         newHighBid.accountId = _newBid.accountId;
+                        _context.listingBid.Add(newHighBid);
+                        _context.SaveChanges();
                         return true;
                     }
                     else
@@ -339,6 +343,8 @@ namespace ItineraryWebAPI
                         newHighBid.bid = _newBid.bid;
                         newHighBid.itemId = _newBid.itemId;
                         newHighBid.accountId = _newBid.accountId;
+                        _context.listingBid.Add(newHighBid);
+                        _context.SaveChanges();
                         return true;
                     }
                     else

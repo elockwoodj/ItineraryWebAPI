@@ -20,29 +20,38 @@ namespace ItineraryWebAPI.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage auctionPrice(int itemId)
+        public HttpResponseMessage auctionPrice(int Id)
         {
-            double auctionPrice = _listingService.GetAuctionPrice(itemId);
-            HttpResponseMessage response =
-                Request.CreateResponse(HttpStatusCode.OK, auctionPrice);
-            return response;
-        }
-
-        [HttpPost]
-        public HttpResponseMessage postListing(bidBEANS newBi_d)
-        {
-            if (_listingService.MakeBid(newBi_d) == true)
+            double Price = _listingService.GetAuctionPrice(Id);
+            if (Price > 0)
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.Created, newBi_d);
-                response.Headers.Location =
-                    new Uri(Request.RequestUri, "/api/Bid/" + newBi_d.Id.ToString());
+                    Request.CreateResponse(HttpStatusCode.OK, Price);
                 return response;
             }
             else
             {
                 HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.NotAcceptable, newBi_d);
+                    Request.CreateResponse(HttpStatusCode.NotAcceptable, Price);
+                return response;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage postBidding(bidBEANS newBidObject)
+        {
+            if (_listingService.MakeBid(newBidObject) == true)
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.Created, newBidObject);
+                response.Headers.Location =
+                    new Uri(Request.RequestUri, "/api/Bid/" + newBidObject.Id.ToString());
+                return response;
+            }
+            else
+            {
+                HttpResponseMessage response =
+                    Request.CreateResponse(HttpStatusCode.NotAcceptable, newBidObject);
                 return response;
             }
         }
