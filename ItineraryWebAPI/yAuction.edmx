@@ -30,7 +30,7 @@
           <Property Name="priceBuy" Type="float" />
           <Property Name="category" Type="int" Nullable="false" />
           <Property Name="accountId" Type="int" Nullable="false" />
-          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="image" Type="varchar" MaxLength="50" />
           <Property Name="startPrice" Type="float" Nullable="false" />
@@ -71,20 +71,6 @@
           <Property Name="itemId" Type="Int32" Nullable="false" />
           <Property Name="accountId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Listings">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="priceBuy" Type="Double" />
-          <Property Name="category" Type="Int32" Nullable="false" />
-          <Property Name="accountId" Type="Int32" Nullable="false" />
-          <Property Name="startDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="startPrice" Type="Double" Nullable="false" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -98,9 +84,23 @@
         <EntityContainer Name="a9027410Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="listing_Category" EntityType="Self.listing_Category" />
           <EntitySet Name="listingBid" EntityType="Self.listingBid" />
-          <EntitySet Name="Listings" EntityType="Self.Listings" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Listings" EntityType="yAuction.Listings" />
         </EntityContainer>
+        <EntityType Name="Listings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="priceBuy" Type="Double" />
+          <Property Name="category" Type="Int32" Nullable="false" />
+          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="startPrice" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -125,21 +125,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Listings">
-            <EntityTypeMapping TypeName="yAuction.Listings">
-              <MappingFragment StoreEntitySet="Listings">
-                <ScalarProperty Name="startPrice" ColumnName="startPrice" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="priceBuy" ColumnName="priceBuy" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="accountId" ColumnName="accountId" />
-                <ScalarProperty Name="startDate" ColumnName="startDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="yAuction.Users">
               <MappingFragment StoreEntitySet="Users">
@@ -148,6 +133,21 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="paymentInformation" ColumnName="paymentInformation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Listings">
+            <EntityTypeMapping TypeName="yAuction.Listings">
+              <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="startPrice" ColumnName="startPrice" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="priceBuy" ColumnName="priceBuy" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

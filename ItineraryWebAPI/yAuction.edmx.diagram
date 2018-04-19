@@ -7,8 +7,8 @@
       <Diagram DiagramId="4b57d12c91144ad9bbef8154c4d2a967" Name="Diagram1">
         <EntityTypeShape EntityType="yAuction.listing_Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="yAuction.listingBid" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="yAuction.Listings" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="yAuction.Users" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="yAuction.Listings" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
