@@ -82,40 +82,40 @@ namespace ItineraryWebAPI
                 {
                     case 1:
                         _newListing.image = "Content/Toys and Games.jpg";
-                    break;
+                        break;
                     case 2:
                         _newListing.image = "Content/furniture.jpg";
-                    break;
+                        break;
                     case 3:
                         _newListing.image = "Content/appliances.jpg";
-                    break;
+                        break;
                     case 4:
                         _newListing.image = "Content/electronics.jpg";
-                    break;
+                        break;
                     case 5:
                         _newListing.image = "Content/mClothes.jpg";
-                    break;
+                        break;
                     case 6:
                         _newListing.image = "Content/wClothes.jpg";
-                    break;
+                        break;
                     case 7:
                         _newListing.image = "Content/kClothes.jpg";
-                    break;
+                        break;
                     case 8:
                         _newListing.image = "Content/gaming.jpg";
-                    break;
+                        break;
                     case 9:
                         _newListing.image = "Content/kids.jpg";
-                    break;
+                        break;
                     case 10:
                         _newListing.image = "Content/garden.jpg";
-                    break;
+                        break;
                     case 11:
                         _newListing.image = "Content/tools.jpg";
-                    break;
+                        break;
                     case 12:
                         _newListing.image = "Content/books-movies-music.jpg";
-                    break;
+                        break;
                 }
 
                 _context.Listings.Add(_newListing);
@@ -270,21 +270,17 @@ namespace ItineraryWebAPI
 
         public double GetAuctionPrice(int ItemId)
         {
-            //Two if statements, one as per in MakeBid one as per below - below comes first to check if null, then do makebid version.
-            double price=0;
+
+            double price;
             listingBid _priceCheck;
             _priceCheck = (from listingBid
                           in _context.listingBid
-                          where listingBid.itemId == ItemId
-                          orderby listingBid.bid descending
-                          select listingBid).DefaultIfEmpty(null).First();
-            if (_priceCheck != null) { 
-                //listingBid bidPrice = _priceCheck.ToList<listingBid>().DefaultIfEmpty(null).First();
-                price = _priceCheck.bid;
-            }
-            else
+                           where listingBid.itemId == ItemId
+                           orderby listingBid.bid descending
+                           select listingBid).DefaultIfEmpty(null).First();
+
+            if (_priceCheck == null)
             {
-                
                 IQueryable<Listings> _checker;
                 _checker = from Listings
                            in _context.Listings
@@ -293,64 +289,47 @@ namespace ItineraryWebAPI
                 Listings checker = _checker.ToList<Listings>().First();
 
                 price = checker.startPrice;
-            }
-            return price;
 
-        }
-        public bool MakeBid(bidBEANS _newBid)
-        {
-            try
+            }
+            else
             {
                 IQueryable<listingBid> _IDCheck;
                 _IDCheck = from listingBid
                            in _context.listingBid
-                           where listingBid.itemId == _newBid.itemId
+                           where listingBid.itemId == ItemId
                            orderby listingBid.bid descending
                            select listingBid;
                 listingBid myBid = _IDCheck.ToList<listingBid>().First();
 
-                if (myBid == null)
+                price = myBid.bid;
+            }
+            return price;
+
+        }
+
+
+
+        
+        public bool MakeBid(bidBEANS _newBid)
+        {
+            try
+            {
+                double price = GetAuctionPrice(_newBid.itemId);
+                if (_newBid.bid > price)
                 {
-                    IQueryable<Listings> _startCheck;
-                    _startCheck = from listing
-                                  in _context.Listings
-                                  where listing.Id == _newBid.itemId
-                                  select listing;
-                    Listings myListing = _startCheck.ToList<Listings>().First();
-                    
-
-                    if (_newBid.bid > myListing.startPrice)
+                    listingBid newHighBid = new listingBid
                     {
-                        listingBid newHighBid = new listingBid();
-                        newHighBid.bid = _newBid.bid;
-                        newHighBid.itemId = _newBid.itemId;
-                        newHighBid.accountId = _newBid.accountId;
-                        _context.listingBid.Add(newHighBid);
-                        _context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
+                        bid = _newBid.bid,
+                        itemId = _newBid.itemId,
+                        accountId = _newBid.accountId
+                    };
+                    _context.listingBid.Add(newHighBid);
+                    _context.SaveChanges();
+                    return true;
                 }
                 else
                 {
-                    if (_newBid.bid > myBid.bid)
-                    {
-                        listingBid newHighBid = new listingBid();
-                        newHighBid.bid = _newBid.bid;
-                        newHighBid.itemId = _newBid.itemId;
-                        newHighBid.accountId = _newBid.accountId;
-                        _context.listingBid.Add(newHighBid);
-                        _context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             catch (DbEntityValidationException e)
