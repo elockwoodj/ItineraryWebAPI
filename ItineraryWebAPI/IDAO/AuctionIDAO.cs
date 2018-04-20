@@ -11,7 +11,7 @@ namespace ItineraryWebAPI
     {
         IList<AuctionBEANS> GetListings(int category);
         IList<listing_Category> GetCategories();
-        IList<listingBid> GetBidHistory(int accountId);
+        IList<bidBEANS> GetBidHistory(int accountId);
         IList<AuctionBEANS> GetListingHistory(int accountId);
         bool ListingCheck(int id);
         bool AddListing(AuctionBEANS _newListing);

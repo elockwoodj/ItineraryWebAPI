@@ -21,7 +21,7 @@ namespace ItineraryWebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetBidHistory(int accountId)
         {
-            IEnumerable<listingBid> _bids =
+            IEnumerable<bidBEANS> _bids =
                 _listingService.GetBidHistory(accountId);
             if (_bids == null)
             {

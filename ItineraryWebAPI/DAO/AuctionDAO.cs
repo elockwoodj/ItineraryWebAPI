@@ -250,14 +250,19 @@ namespace ItineraryWebAPI
 
         // Get Bid History 
 
-        public IList<listingBid> GetBidHistory(int accountId)
+        public IList<bidBEANS> GetBidHistory(int accountId)
         {
-            IQueryable<listingBid> __bidHistory;
-            __bidHistory = from History
-                           in _context.listingBid
+            IQueryable<bidBEANS> __bidHistory;
+            __bidHistory = from History in _context.listingBid
+                           from list in _context.Listings
                            where History.accountId == accountId
-                           select History;
-            return __bidHistory.ToList<listingBid>();
+                           where History.itemId == list.Id
+                           select new bidBEANS
+                           {
+                               title = list.title,
+                               bid = History.bid
+                           };
+            return __bidHistory.ToList<bidBEANS>();
         }
 
         // Get Listing History
