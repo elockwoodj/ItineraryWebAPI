@@ -261,14 +261,24 @@ namespace ItineraryWebAPI
         }
 
         // Get Listing History
-        public IList<Listings> GetListingHistory(int accountId)
+        public IList<AuctionBEANS> GetListingHistory(int accountId)
         {
-            IQueryable<Listings> _listingHistory;
-            _listingHistory = from LHistory
-                              in _context.Listings
+            IQueryable<AuctionBEANS> _listingHistory;
+            _listingHistory = from LHistory in _context.Listings
+                              from categ in _context.listing_Category
                               where LHistory.accountId == accountId
-                              select LHistory;
-            return _listingHistory.ToList<Listings>();
+                              where LHistory.category == categ.Id
+                              select new AuctionBEANS
+                              {
+                                  category = categ.category,
+                                  Id = LHistory.Id,
+                                  title = LHistory.title,
+                                  description = LHistory.description,
+                                  image = LHistory.image,
+                                  priceBuy = LHistory.priceBuy,
+                                  endDate = LHistory.endDate
+                              };
+            return _listingHistory.ToList<AuctionBEANS>();
 
         }
 

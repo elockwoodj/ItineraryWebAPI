@@ -23,7 +23,7 @@ namespace ItineraryWebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetListingHistory(int accountId)
         {
-            IEnumerable<Listings> _listHistory =
+            IEnumerable<AuctionBEANS> _listHistory =
                 _listingService.GetListingHistory(accountId);
             if (_listHistory == null)
             {
