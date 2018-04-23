@@ -14,6 +14,7 @@ namespace ItineraryWebAPI
         public double bid { get; set; }
         public int itemId { get; set; }
         public int accountId { get; set; }
+        public string title { get; set; }
 
     }
 }

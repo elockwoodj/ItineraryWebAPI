@@ -20,7 +20,7 @@ namespace ItineraryWebAPI.Controllers
             _listingService = new AuctionDAO();
         }
 
-
+        //Method used to get the list of all the categories, useing GetCategories method from DAO - doesn't need input as it simply returns all of the items
         [HttpGet]
         public HttpResponseMessage GetListingCategories()
         {
@@ -40,7 +40,7 @@ namespace ItineraryWebAPI.Controllers
             }
         }
 
-
+        //Accepts a category id and passes this to the GetListings method in the DAO, this will return all of the listings within a given category
         public HttpResponseMessage GetListings(int id)
         {
             IEnumerable<AuctionBEANS> listing = _listingService.GetListings(id);

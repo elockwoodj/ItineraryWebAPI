@@ -16,6 +16,8 @@ namespace ItineraryWebAPI
         {
             _context = new a9027410Entities();
         }
+        //Accepts the id for a category from the listings table, then using a linq statement selects information from both the Listings and the listing_Category table
+        //These are formatted into a BEAN as this provides the ability to access information from both tables in the same object - returning the desired information
         public IList<AuctionBEANS> GetListings(int category)
         {
             //Place variables from the tables into the beans
@@ -42,7 +44,7 @@ namespace ItineraryWebAPI
 
         }
 
-        //Get one particular listing method
+        //Accepts the id for a listing, using this selects the first listing from the Listings table with that specified Id - these Id's are a primary key hence each id will refer to a single listing
 
         public Listings GetSingularListing(int Id)
         {
@@ -52,7 +54,7 @@ namespace ItineraryWebAPI
             return _listingBEAN.ToList<Listings>().First();
         }
 
-        //Listing check
+        //Accepts an Id for a listing, checking if this listing exists within the Listings table - USED IN XYZ
 
         public bool ListingCheck(int Id)
         {
@@ -64,7 +66,8 @@ namespace ItineraryWebAPI
             else { return false; }
         }
 
-        //Add new listing funcionality
+        //Accepts an AuctionBEANS object, which will be converted into a Listings object to be input into the Listings table
+        //Returns true if the object is successfully added into the Listings table
         public bool AddListing(AuctionBEANS _listingBEAN)
         {
             try
@@ -81,6 +84,7 @@ namespace ItineraryWebAPI
                 _newListing.startPrice = _listingBEAN.startPrice;
 
 
+                //Currently it isn't possible to upload personalised images, each category has a set image - this switch case sets the image URL which is used within the HTML page
                 switch (_listingBEAN.categoryId)
                 {
                     case 1:
@@ -146,7 +150,8 @@ namespace ItineraryWebAPI
             }
         }
 
-        //Delete Listing Functionality
+        //accepts a Listings object, using the ListingCheck method detailed earlier to confirm the listing exists before deleting it
+        //if the listing does exist all the required information is placed into an object (_doomedList) and removed from the table - these changes are then saved
         public bool DeleteListing(Listings _listingBEAN)
         {
             bool check = ListingCheck(_listingBEAN.Id);
@@ -164,8 +169,8 @@ namespace ItineraryWebAPI
 
         }
 
-        //Edit the Listing function
-
+        //accepts a Listings object, using the ListingCheck method detailed earlier to confirm the listing exists before editing it
+        //if the listing does exist all the required information is placed into an object (update) and changed within the table - these changes are then saved
         public bool EditListing(AuctionBEANS _listingBEAN)
         {
             if (ListingCheck(_listingBEAN.Id) == true)
@@ -242,25 +247,40 @@ namespace ItineraryWebAPI
 
         // Get Bid History 
 
-        public IList<listingBid> GetBidHistory(int accountId)
+        public IList<bidBEANS> GetBidHistory(int accountId)
         {
-            IQueryable<listingBid> __bidHistory;
-            __bidHistory = from History
-                           in _context.listingBid
+            IQueryable<bidBEANS> __bidHistory;
+            __bidHistory = from History in _context.listingBid
+                           from list in _context.Listings
                            where History.accountId == accountId
-                           select History;
-            return __bidHistory.ToList<listingBid>();
+                           where History.itemId == list.Id
+                           select new bidBEANS
+                           {
+                               title = list.title,
+                               bid = History.bid
+                           };
+            return __bidHistory.ToList<bidBEANS>();
         }
 
         // Get Listing History
-        public IList<Listings> GetListingHistory(int accountId)
+        public IList<AuctionBEANS> GetListingHistory(int accountId)
         {
-            IQueryable<Listings> _listingHistory;
-            _listingHistory = from LHistory
-                              in _context.Listings
+            IQueryable<AuctionBEANS> _listingHistory;
+            _listingHistory = from LHistory in _context.Listings
+                              from categ in _context.listing_Category
                               where LHistory.accountId == accountId
-                              select LHistory;
-            return _listingHistory.ToList<Listings>();
+                              where LHistory.category == categ.Id
+                              select new AuctionBEANS
+                              {
+                                  category = categ.category,
+                                  Id = LHistory.Id,
+                                  title = LHistory.title,
+                                  description = LHistory.description,
+                                  image = LHistory.image,
+                                  priceBuy = LHistory.priceBuy,
+                                  endDate = LHistory.endDate
+                              };
+            return _listingHistory.ToList<AuctionBEANS>();
 
         }
 

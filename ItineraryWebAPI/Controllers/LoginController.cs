@@ -17,6 +17,8 @@ namespace ItineraryWebAPI.Controllers
         {
 
         }
+
+        //Accepts a login object requiring a password and a username, if these are correct returns the accepted response, otherwise it returns the authenticated = false response
         public HttpResponseMessage PostLogin(Auth myAuth)
         {
 
