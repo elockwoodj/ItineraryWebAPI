@@ -18,6 +18,7 @@ namespace ItineraryWebAPI.Controllers
             _listingService = new AuctionDAO();
         }
 
+        //Accepts an accountId, using the GetBidHistory method from the DAO to return all the rows from the listingBid table with the same accountId
         [HttpGet]
         public HttpResponseMessage GetBidHistory(int accountId)
         {

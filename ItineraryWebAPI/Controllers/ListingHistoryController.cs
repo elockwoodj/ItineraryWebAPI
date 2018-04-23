@@ -19,7 +19,8 @@ namespace ItineraryWebAPI.Controllers
             _listingService = new AuctionDAO();
         }
 
-
+        //Accepts the accountId for a specified account, passing this to the GetListingHistory method in the DAO - 
+        //This will return all the Listings posted by the specified accountId
         [HttpGet]
         public HttpResponseMessage GetListingHistory(int accountId)
         {

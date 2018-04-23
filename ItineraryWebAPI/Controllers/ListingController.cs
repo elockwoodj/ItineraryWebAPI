@@ -19,8 +19,8 @@ namespace ItineraryWebAPI
             _listingService = new AuctionDAO();
         }
 
+        //Accepts the id for a listing and passes the value onto the GetSingularListing method in the DAO, returning a listing from the Listings table with specified Id
         [HttpGet]
-
         public HttpResponseMessage getSingularListing (int id)
         {
             Listings listing = _listingService.GetSingularListing(id);
@@ -38,7 +38,7 @@ namespace ItineraryWebAPI
             }
         }
        
-
+        //Accepts an object with the needed values to post to the Listings table - passes to the AddListing method in the DAO
         [HttpPost]
         public HttpResponseMessage postListing(AuctionBEANS newListing)
         {
@@ -58,6 +58,7 @@ namespace ItineraryWebAPI
             }
         }
         
+        //Accepts an edited listing - passes to the EditListing method in the DAO which will change the values in a listing
         [HttpPut]
         public HttpResponseMessage putListing(AuctionBEANS listingChange)
         {
@@ -77,8 +78,8 @@ namespace ItineraryWebAPI
             }
         }
 
+        //Accepts the id for a listing to be deleted, checks this listing exists using the GetSingularListing method - if it does it will then delete the listing and respond 
         [HttpDelete]
-
         public HttpResponseMessage deleteListing (int id)
         {
             Listings _doomedListing = _listingService.GetSingularListing(id);

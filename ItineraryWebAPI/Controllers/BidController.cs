@@ -18,7 +18,7 @@ namespace ItineraryWebAPI.Controllers
         {
             _listingService = new AuctionDAO();
         }
-
+        //Accepts an item id number relating to the ID column of the listings table - using the GetAuctionPrice method from the DAO to return the current auction price that listing has
         [HttpGet]
         public HttpResponseMessage auctionPrice(int Id)
         {
@@ -37,6 +37,7 @@ namespace ItineraryWebAPI.Controllers
             }
         }
 
+        //Accepts an object containing: accountId, itemId and the bid amount. Uses MakeBid method in DAO to post the object into the listingBid table
         [HttpPost]
         public HttpResponseMessage postBidding(bidBEANS newBidObject)
         {
