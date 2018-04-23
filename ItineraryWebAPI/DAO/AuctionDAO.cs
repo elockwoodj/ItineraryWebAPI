@@ -84,7 +84,8 @@ namespace ItineraryWebAPI
                 _newListing.startPrice = _listingBEAN.startPrice;
 
 
-                //Currently it isn't possible to upload personalised images, each category has a set image - this switch case sets the image URL which is used within the HTML page
+                //Currently it isn't possible to upload personalised images, each category has a set image - 
+                //this switch case sets the image URL which is used within the HTML page
                 switch (_listingBEAN.categoryId)
                 {
                     case 1:
