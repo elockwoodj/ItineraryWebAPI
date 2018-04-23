@@ -69,16 +69,17 @@ namespace ItineraryWebAPI
         {
             try
             {
-                Listings _newListing = new Listings
-                {
-                    title = _listingBEAN.title,
-                    description = _listingBEAN.description,
-                    priceBuy = _listingBEAN.priceBuy,
-                    category = _listingBEAN.categoryId,
-                    accountId = _listingBEAN.accountId,
-                    endDate = _listingBEAN.endDate,
-                    startPrice = _listingBEAN.startPrice
-                };
+                Listings _newListing = new Listings();
+
+
+                _newListing.title = _listingBEAN.title;
+                _newListing.description = _listingBEAN.description;
+                _newListing.priceBuy = _listingBEAN.priceBuy;
+                _newListing.category = _listingBEAN.categoryId;
+                _newListing.accountId = _listingBEAN.accountId;
+                _newListing.endDate = _listingBEAN.endDate;
+                _newListing.startPrice = _listingBEAN.startPrice;
+
 
                 switch (_listingBEAN.categoryId)
                 {
@@ -155,21 +156,12 @@ namespace ItineraryWebAPI
             }
             else
             {
-                Listings _doomedList = new Listings
-                {
-                    title = _listingBEAN.title,
-                    description = _listingBEAN.description,
-                    image = _listingBEAN.image,
-                    priceBuy = _listingBEAN.priceBuy,
-                    category = _listingBEAN.category,
-                    accountId = _listingBEAN.accountId,
-                    endDate = _listingBEAN.endDate,
-                    startPrice = _listingBEAN.startPrice
-                };
-                _context.Listings.Remove(_doomedList);
+                _context.Listings.Remove(_listingBEAN);
                 _context.SaveChanges();
                 return true;
-            }
+            };
+
+
         }
 
         //Edit the Listing function
@@ -313,7 +305,7 @@ namespace ItineraryWebAPI
 
 
 
-        
+
         public bool MakeBid(bidBEANS _newBid)
         {
             try
