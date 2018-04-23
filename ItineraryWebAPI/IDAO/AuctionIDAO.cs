@@ -9,6 +9,7 @@ namespace ItineraryWebAPI
 {
     public interface AuctionIDAO
     {
+        //These are the methods 
         IList<AuctionBEANS> GetListings(int category);
         IList<listing_Category> GetCategories();
         IList<bidBEANS> GetBidHistory(int accountId);

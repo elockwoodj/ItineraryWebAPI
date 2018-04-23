@@ -152,16 +152,16 @@ namespace ItineraryWebAPI
 
         //accepts a Listings object, using the ListingCheck method detailed earlier to confirm the listing exists before deleting it
         //if the listing does exist all the required information is placed into an object (_doomedList) and removed from the table - these changes are then saved
-        public bool DeleteListing(Listings _listingBEAN)
+        public bool DeleteListing(Listings _doomedList)
         {
-            bool check = ListingCheck(_listingBEAN.Id);
+            bool check = ListingCheck(_doomedList.Id);
             if (check == false)
             {
                 return false;
             }
             else
             {
-                _context.Listings.Remove(_listingBEAN);
+                _context.Listings.Remove(_doomedList);
                 _context.SaveChanges();
                 return true;
             };
@@ -233,8 +233,7 @@ namespace ItineraryWebAPI
         }
 
 
-        //Get list of listing categories method
-
+        //Method doesn't require input as it simply selects all the information from the listing_Category table and returns this information as a list
         public IList<listing_Category> GetCategories()
         {
             IQueryable<listing_Category> _categories;
@@ -245,7 +244,10 @@ namespace ItineraryWebAPI
             return _categories.ToList<listing_Category>();
         }
 
-        // Get Bid History 
+        //Method requires an accountId as input as it selects information from both the Listing table and the listingBid table
+        //It first selects all the bids in the bid table with the specified accountId, it then uses these bids to select
+        //records from the Listings table that have the itemId specified in the retrieved records
+        //The information it returns is simply the title of the bids and the bids entered, these are returned as a list
 
         public IList<bidBEANS> GetBidHistory(int accountId)
         {
@@ -257,12 +259,17 @@ namespace ItineraryWebAPI
                            select new bidBEANS
                            {
                                title = list.title,
-                               bid = History.bid
+                               bid = History.bid,
+                               itemId = list.Id
                            };
             return __bidHistory.ToList<bidBEANS>();
         }
 
-        // Get Listing History
+        //Method accepts an accountId to be able to check all of the listings a specified account has made
+        //returns all the information on the listing and hence is required to also access the listing_Category 
+        //table to get the name of the category as this is only stored there.
+        //Use of BEANS again here as information is required from two tables.
+        //Returns a list of auctionBEANS
         public IList<AuctionBEANS> GetListingHistory(int accountId)
         {
             IQueryable<AuctionBEANS> _listingHistory;
@@ -284,17 +291,22 @@ namespace ItineraryWebAPI
 
         }
 
+        //Functionality of this method is to compare the current maximum price of any bids on an item, if there are no bids it will consult the Listings
+        //table and select the startPrice return that value
+        //It requires an input of a specified itemId to be able to select these values from the two tables
         public double GetAuctionPrice(int ItemId)
         {
-
+            //price is assigned depending on which linq statement is used, then returned at the end of the method
             double price;
             listingBid _priceCheck;
+            //the object _priceCheck is used to test whether an item has any bids on it, it consults the listingBid table - if the table returns an empty value 
+            //it is then assigned a value of null and select the first value - this is because it is returned in a "list" format, hence the need for First()
             _priceCheck = (from listingBid
-                          in _context.listingBid
+                           in _context.listingBid
                            where listingBid.itemId == ItemId
-                           orderby listingBid.bid descending
                            select listingBid).DefaultIfEmpty(null).First();
 
+            //If the _priceCheck object is null (no bids on selected item), it will then need to select the startPrice from the Listings table
             if (_priceCheck == null)
             {
                 IQueryable<Listings> _checker;
@@ -305,8 +317,10 @@ namespace ItineraryWebAPI
                 Listings checker = _checker.ToList<Listings>().First();
 
                 price = checker.startPrice;
-
             }
+            //if _priceCheck is not null, there must be a bid on the selected item, therefore the maximum bid will be within the listingBid table
+            //the selected bids are ordered in descending order as this will place the largest bid at the top of the list, using First() to then select this value
+
             else
             {
                 IQueryable<listingBid> _IDCheck;
@@ -325,14 +339,20 @@ namespace ItineraryWebAPI
 
 
 
-
+        //Accepts a _newBid object which contains: accountId, itemId and bid - 
+        //some logic applied to make sure the information is valid before it adds the information to the table
         public bool MakeBid(bidBEANS _newBid)
         {
+            //Implementing try/catch to stop the programme crashing if incorrect information is entered
             try
             {
+                //maximum price of the selected item is found using the GetAuctionPrice method detailed previously
                 double price = GetAuctionPrice(_newBid.itemId);
+
+                //The bid will only be added to the table if the value of the bid entered is greater than the current price of the auction
                 if (_newBid.bid > price)
                 {
+                    //New listingBid object generated to be added into the table and saved
                     listingBid newHighBid = new listingBid
                     {
                         bid = _newBid.bid,
@@ -343,6 +363,7 @@ namespace ItineraryWebAPI
                     _context.SaveChanges();
                     return true;
                 }
+                //If the bid entered isn't greater than the current price it is rejected
                 else
                 {
                     return false;
