@@ -91,17 +91,17 @@ namespace ItineraryWebAPI
             else
             {
                  if (_listingService.DeleteListing(_doomedListing))
-                {
-                HttpResponseMessage response =
-                    Request.CreateResponse(HttpStatusCode.OK, _doomedListing);
+                 {
+                     HttpResponseMessage response =
+                         Request.CreateResponse(HttpStatusCode.OK, _doomedListing);
                     return response;
-                }
+                 }
                  else
-                {
+                 {
                     HttpResponseMessage response =
                         Request.CreateResponse(HttpStatusCode.InternalServerError, id);
                     return response;
-                }
+                 }
             }
            
         }

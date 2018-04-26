@@ -152,7 +152,7 @@ namespace ItineraryWebAPI
         }
 
         //accepts a Listings object, using the ListingCheck method detailed earlier to confirm the listing exists before deleting it
-        //if the listing does exist all the required information is placed into an object (_doomedList) and removed from the table - these changes are then saved
+        //if the listing does exist the object _doomedList is removed from the table and saved
         public bool DeleteListing(Listings _doomedList)
         {
             bool check = ListingCheck(_doomedList.Id);
